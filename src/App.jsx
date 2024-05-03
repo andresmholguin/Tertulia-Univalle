@@ -21,13 +21,13 @@ function App() {
       <div className="flex flex-col my-5">
         <div className="flex justify-center">
           <img
-            src="src\assets\logo_tertulia.svg"
+            src="src/assets/logo_tertulia.svg"
             alt="Logo Museo La Tertulia"
             className="px-2 h-28"
           />
           <img
-            src="src\assets\univalle.png"
-            alt="Logo Museo La Tertulia"
+            src="src/assets/univalle.png"
+            alt="Logo Univalle"
             className="px-2 h-28 "
           />
         </div>
