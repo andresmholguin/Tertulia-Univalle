@@ -26,7 +26,7 @@ function App() {
             className="px-2 h-28"
           />
           <img
-            src=".\src\assets\univalle.png"
+            src="https://carrerasuniversitarias.com.co/logos/original/logo-universidad-del-valle.webp"
             alt="Logo Univalle"
             className="px-2 h-28 "
           />
