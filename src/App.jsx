@@ -1,19 +1,28 @@
 import { useState } from "react";
-import Result from "./Result";
+import data from "./assets/data.json";
 
 function App() {
   const [id, setId] = useState("");
-  const [show, setShow] = useState(false);
+  const [person, setPerson] = useState(null);
+  const [searched, setSearched] = useState(false);
 
   const handleChange = (e) => {
     setId(e.target.value);
-    setShow(false);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (id !== "") {
-      setShow(true);
-    }
+
+    const result = data.find((item) => item.CEDULA.toString() === id.trim());
+
+    setPerson(result || null);
+    setSearched(true);
+  };
+
+  const handleReset = () => {
+    setId("");
+    setPerson(null);
+    setSearched(false);
   };
 
   return (
@@ -21,46 +30,85 @@ function App() {
       <div className="flex flex-col my-5">
         <div className="flex justify-center">
           <img
-            src="https://museolatertulia.com/wp-content/themes/tertulia/images/logo_tertulia.svg"
-            alt="Logo Museo La Tertulia"
-            className="px-2 h-28"
-          />
-          <img
-            src="https://carrerasuniversitarias.com.co/logos/original/logo-universidad-del-valle.webp"
-            alt="Logo Univalle"
-            className="px-2 h-28 "
+            src="https://www.colboletos.com/themes/colboletos/assets/img/logo.webp"
+            alt="logo Colboletos"
+            className="w-80 object-contain h-auto"
           />
         </div>
-        <h1 className="m-auto text-bold text-3xl md:text-5xl font-bold">
-          TERTULIA - UNIVALLE
+
+        <h1 className="text-bold md:text-5xl m-auto mb-3 text-3xl font-bold">
+          COLBOLETOS - FITCALI2026
         </h1>
-        <p className="m-auto text-2xl md:text-4xl font-light italic">
+
+        <p className="md:text-4xl m-auto text-2xl italic font-light">
           CONVENIO
         </p>
       </div>
+
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label className="block overflow-hidden rounded-md border border-fuchsia-400 px-3 py-2 focus-within:shadow-xl focus-within:border-fuchsia-600 focus-within:ring-1 focus-within:ring-fuchsia-600 w-[80%] md:w-[40%] m-auto">
-          <span className=" font-medium text-gray-700 text-xs">
-            {" "}
-            DOCUMENTO{" "}
-          </span>
+        <label className="block overflow-hidden rounded-md border border-blue-400 px-3 py-2 focus-within:shadow-xl focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 w-[80%] md:w-[40%] m-auto">
+          <span className="text-xs font-medium text-gray-700">DOCUMENTO</span>
 
           <input
-            type="number"
-            id="UserEmail"
+            type="text"
             onChange={handleChange}
             value={id}
-            className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm font-bold"
+            className="focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm w-full p-0 mt-1 font-bold border-none"
           />
         </label>
-        <button
-          type="submit"
-          className="m-auto mt-6 bg-fuchsia-800 px-10 py-2 rounded-full text-white font-bold hover:bg-fuchsia-700  transition-all hover:shadow-inner cursor-pointer"
-        >
-          Buscar
-        </button>
+
+        <div className="flex justify-center gap-4 mt-6">
+          <button
+            type="submit"
+            className="hover:bg-blue-700 hover:shadow-inner px-10 py-2 font-bold text-white transition-all bg-blue-800 rounded-full cursor-pointer"
+          >
+            Buscar
+          </button>
+
+          <button
+            type="button"
+            onClick={handleReset}
+            className="hover:bg-gray-400 hover:shadow-inner px-10 py-2 font-bold text-black transition-all bg-gray-300 rounded-full cursor-pointer"
+          >
+            Borrar
+          </button>
+        </div>
       </form>
-      <div>{show ? <Result id={id} /> : ""}</div>
+
+      {searched && (
+        <div className="w-[80%] md:w-[40%] m-auto mt-8">
+          {person ? (
+            <div className="rounded-xl p-5 border shadow-lg">
+              <h2 className="mb-4 text-2xl font-bold">Resultado encontrado</h2>
+
+              <div className="flex flex-col gap-2">
+                <p>
+                  <span className="font-bold">ID:</span> {person.ID}
+                </p>
+
+                <p>
+                  <span className="font-bold">Cédula:</span> {person.CEDULA}
+                </p>
+
+                <p>
+                  <span className="font-bold">Apellidos:</span>{" "}
+                  {person.APELLIDOS}
+                </p>
+
+                <p>
+                  <span className="font-bold">Nombres:</span> {person.NOMBRES}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-xl p-5 text-center border shadow-lg">
+              <p className="font-bold text-red-500">
+                No se encontró ninguna persona con esa cédula
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
