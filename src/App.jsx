@@ -37,7 +37,7 @@ function App() {
         </div>
 
         <h1 className="text-bold md:text-5xl m-auto mb-3 text-3xl font-bold">
-          COLBOLETOS - FITCALI2026
+          FEBIFAM - FITCALI2026
         </h1>
 
         <p className="md:text-4xl m-auto text-2xl italic font-light">
