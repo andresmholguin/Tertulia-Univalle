@@ -25,6 +25,18 @@ function App() {
     setSearched(false);
   };
 
+  const [copiado, setCopiado] = useState(false);
+
+  const copiarTexto = async () => {
+    await navigator.clipboard.writeText(person.CODIGO);
+
+    setCopiado(true);
+
+    setTimeout(() => {
+      setCopiado(false);
+    }, 2000);
+  };
+
   return (
     <>
       <div className="flex flex-col my-5">
@@ -37,11 +49,11 @@ function App() {
         </div>
 
         <h1 className="text-bold md:text-5xl m-auto mb-3 text-3xl font-bold">
-          FEBIFAM - FITCALI2026
+          FITCALI2026
         </h1>
 
         <p className="md:text-4xl m-auto text-2xl italic font-light">
-          CONVENIO
+          CONVENIOS
         </p>
       </div>
 
@@ -82,22 +94,35 @@ function App() {
               <h2 className="mb-4 text-2xl font-bold">Resultado encontrado</h2>
 
               <div className="flex flex-col gap-2">
-                <p>
-                  <span className="font-bold">ID:</span> {person.ID}
+                <p className="sm:flex-row flex flex-col text-center gap-2">
+                  <span className="font-bold">Cédula: </span> {person.CEDULA}
                 </p>
 
-                <p>
-                  <span className="font-bold">Cédula:</span> {person.CEDULA}
+                <p className="sm:flex-row flex flex-col text-center gap-2">
+                  <span className="font-bold">Nombres: </span> {person.NOMBRE}
                 </p>
+                <div className="flex justify-center w-full">
+                  <div className="sm:flex-row flex flex-col w-full max-w-md overflow-hidden border border-gray-300 rounded-lg">
+                    <input
+                      type="text"
+                      value={person.CODIGO}
+                      readOnly
+                      className="bg-gray-50 sm:text-base flex-1 min-w-0 px-4 py-3 text-sm text-center outline-none"
+                    />
 
-                <p>
-                  <span className="font-bold">Apellidos:</span>{" "}
-                  {person.APELLIDOS}
-                </p>
-
-                <p>
-                  <span className="font-bold">Nombres:</span> {person.NOMBRES}
-                </p>
+                    <button
+                      type="button"
+                      onClick={copiarTexto}
+                      className={`px-4 py-3 text-sm sm:text-base font-semibold text-white transition-all duration-200 whitespace-nowrap ${
+                        copiado
+                          ? "bg-green-600 hover:bg-green-700"
+                          : "bg-gray-900 hover:bg-black"
+                      }`}
+                    >
+                      {copiado ? "Copiado ✓" : "Copiar"}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ) : (
